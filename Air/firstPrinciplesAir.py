@@ -18,7 +18,7 @@ fan_ca = .120 ** 2  # fan cross sectional area (m^2)
 SP = 90 + 273.15  # K (Set Point Temperature)
 
 
-def dTCPUdt(T, t, Q_CPU, vol_air, T_air):
+def sim_air(T, t, Q_CPU, vol_air, T_air):
     θb = T - T_air
 
     vel_air = vol_air / fan_ca

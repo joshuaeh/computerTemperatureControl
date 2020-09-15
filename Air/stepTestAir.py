@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
-from Air.firstPrinciplesAir import dTCPUdt
+from Air.firstPrinciplesAir import sim_air
 
 Ta = 25 + 273.15  # ambient temperature (deg K)
 fan_max = .01878351  # max volume flow rate of fans (m^3)
@@ -33,7 +33,7 @@ initial_values = [Ta]
 temps = np.ones(n+1) * Ta
 # simulate
 for i in range(n):
-    y = odeint(dTCPUdt, initial_values, [0,1], args=(q[i], fan[i], T_air[i]))
+    y = odeint(sim_air, initial_values, [0, 1], args=(q[i], fan[i], T_air[i]))
     initial_values = y[-1]
     temps[i+1] = initial_values
 
@@ -70,7 +70,7 @@ initial_values = [Ta]
 temps = np.ones(n+1)*Ta
 # simulate
 for i in range(n):
-    y = odeint(dTCPUdt, initial_values, [0,1], args=(q[i], fan[i], T_air[i]))
+    y = odeint(sim_air, initial_values, [0, 1], args=(q[i], fan[i], T_air[i]))
     initial_values = y[-1]
     temps[i+1] = initial_values
 
@@ -105,7 +105,7 @@ initial_values = [Ta]
 temps = np.ones(n+1) * Ta
 # simulate
 for i in range(n):
-    y = odeint(dTCPUdt, initial_values, [0,1], args=(q[i], fan[i], T_air[i]))
+    y = odeint(sim_air, initial_values, [0, 1], args=(q[i], fan[i], T_air[i]))
     initial_values = y[-1]
     temps[i+1] = initial_values
 
