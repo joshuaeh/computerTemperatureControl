@@ -16,17 +16,17 @@ time = np.linspace(0, n, n+1)
 T_air = np.ones(n+1) * Ta
 q = np.ones(n+1) * 100  # 100 W power usage
 # fan steps
-fan = np.ones(n+1) * .3
-fan[300:] = .01
-fan[600:] = .1
-fan[900:] = .5
-fan[1200:] = .03
-fan[1500:] = .7
-fan[1800:] = .15
-fan[2100:] = .6
-fan[2400:] = .05
-fan[2700:] = .3
-fan[3000:] = .2
+fan = np.ones(n+1)
+fan[300:] = .75
+fan[600:] = .55
+fan[900:] = .85
+fan[1200:] = .65
+fan[1500:] = .6
+fan[1800:] = .7
+fan[2100:] = .8
+fan[2400:] = .9
+fan[2700:] = .95
+fan[3000:] = .6
 fan = fan * fan_max * 2
 
 initial_values = [Ta]
@@ -41,7 +41,7 @@ for i in range(n):
 Tcpu = temps
 d = {'Time': time, 'Tcpu': Tcpu, 'Fan': fan, 'Q': q, 'T_air': T_air}
 df = pd.DataFrame.from_dict(data=d)
-df.to_csv('w_Fan_step.csv')
+df.to_csv('a_Fan_step.csv')
 
 # plot results
 plt.figure(figsize=(5, 4))
@@ -53,7 +53,7 @@ plt.subplot(2, 1, 2)
 plt.plot(time/60, fan/(fan_max * 2), label='fan(%)')
 plt.ylabel('fan %')
 plt.xlabel('Time (min)')
-plt.savefig('w_fan_step.png')
+plt.savefig('a_fan_step.png')
 
 # step test 2: q
 # Initialize arrays
@@ -78,7 +78,7 @@ for i in range(n):
 Tcpu = temps
 d = {'Time': time, 'Tcpu': Tcpu, 'Fan': fan, 'Q': q, 'T_air': T_air}
 df = pd.DataFrame(data=d)
-df.to_csv('w_q_step.csv')
+df.to_csv('a_q_step.csv')
 
 # plot results
 plt.figure(figsize=(5, 4))
@@ -90,7 +90,7 @@ plt.subplot(2, 1, 2)
 plt.plot(time/60, q/115, label='heater(%)')
 plt.ylabel('Heater %')
 plt.xlabel('Time (min)')
-plt.savefig('w_q_step.png')
+plt.savefig('a_q_step.png')
 
 # step test 3: T_outside
 # Initialize arrays
@@ -113,7 +113,7 @@ for i in range(n):
 Tcpu = temps
 d = {'Time': time, 'Tcpu': Tcpu, 'Fan': fan, 'Q': q, 'T_air': T_air}
 df = pd.DataFrame(data=d)
-df.to_csv('w_Ta_step.csv')
+df.to_csv('a_Ta_step.csv')
 
 # plot results
 plt.figure(figsize=(5, 4))
@@ -125,6 +125,6 @@ plt.subplot(2, 1, 2)
 plt.plot(time/60, T_air-273.15)
 plt.ylabel('T ambient (deg C)')
 plt.xlabel('Time (min)')
-plt.savefig('w_Ta_step.png')
+plt.savefig('a_Ta_step.png')
 
 
