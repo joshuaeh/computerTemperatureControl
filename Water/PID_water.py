@@ -5,9 +5,9 @@ from scipy.integrate import odeint
 
 from Air.firstPrinciplesAir import sim_air
 
-Kp = -15/100
-taup = .24
-Tss = 322
+Kp = -.2
+taup = 6
+Tss = 360
 uss = 100
 
 
@@ -15,7 +15,7 @@ uss = 100
 def Air_FOPDT(T_cpu, t, u, q, Ta):
     # Disturbance effects
     dTdt_q = (q - 105) / 20
-    dTdt_Ta = (Ta - 298)/3
+    dTdt_Ta = (Ta - 298)
     D = dTdt_q + dTdt_Ta
     # FOPDT Model
     dTdt = (-(T_cpu - Tss) + Kp * (u-uss))/taup + D
@@ -33,13 +33,13 @@ sp = np.ones(n+1) * (273.15 + 60)
 # q_cpu: random each minute between 10-105 W
 q_cpu = np.ones(n+1)
 for i in range(1, n+1):
-    q_cpu[i] = q_cpu[i-1] + np.random.uniform(-5, 5)
+    q_cpu[i] = q_cpu[i-1] + np.random.uniform(-.1, .1)
     q_cpu[i] = min(q_cpu[i], 105)
     q_cpu[i] = max(q_cpu[i], 10)
 # ambient temperature bounded between 15 and 32 C
 T_ambient = np.ones(n+1) * (273.15 + 25)
 for i in range(1, n+1):
-    T_ambient[i] = T_ambient[i-1] + np.random.uniform(-1, 1)
+    T_ambient[i] = T_ambient[i-1] + np.random.uniform(-.1, .1)
     T_ambient[i] = min(T_ambient[i], 273.15 + 32)
     T_ambient[i] = max(T_ambient[i], 273.15 + 15)
 
@@ -132,5 +132,5 @@ plt.ylabel('CPU Heat (W)')
 plt.subplot(4, 1, 4)
 plt.plot(t[j:k], T_ambient[j:k]-273.15, 'r-')
 plt.ylabel('Ambient Temperature')
-plt.savefig('FinalPIDControl_Water_Dynamic.png')
+plt.savefig('FinalPIDControl_Water_lessDynamic.png')
 plt.show()
